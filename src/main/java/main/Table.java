@@ -63,16 +63,19 @@ public class Table extends Thread {
     }
 
     public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
-            try {
-                ball.updatePosition();
-                player1.update();
-                player2.update();
-                updateView();
-                wait(200);
-            } catch (InterruptedException e) {
+        synchronized (this){
+            while (!isInterrupted()) {
+                try {
+                    ball.updatePosition();
+                    player1.update();
+                    player2.update();
+                    updateView();
+                    wait(200);
+                } catch (InterruptedException e) {
+                }
             }
         }
+
     }
 
 
